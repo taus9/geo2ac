@@ -6,15 +6,14 @@ import sys
 import csv
 
 load_dotenv()
+
 api_key = os.getenv("API_KEY")
-if api_key == "None":
+if api_key is None:
   print("No API key found")
   sys.exit(1)
 
 filename = "us-area-code-geo.csv"
 rows = []
-
-print(api_key)
 
 with open(filename, 'r') as csvfile:
   csvreader = csv.reader(csvfile)
