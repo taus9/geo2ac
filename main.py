@@ -5,6 +5,7 @@ import os
 import sys
 import csv
 import requests
+import time
 
 def start_request():
   while True:
@@ -41,7 +42,7 @@ if start_request() == False:
   
 newRows = []
 index = 0
-while index < len(rows):
+while index < 10:
 
   params = {
     "key": api_key,
@@ -55,11 +56,15 @@ while index < len(rows):
   response = requests.get(api_gateway + end_point, params=params)  
  
   if response.status_code == 200:
-    print(response.json().get("abbreviation"))
-    index += 1
+    newRow = [rows[index][0], response.json().get("abbreviation")]
+    newRows.append(newRow)
   elif response.status_code == 429:
-    print("Rate limit retry.")  
-  else:
-    print("Error skipping code")
-    index += 1
-
+    continue
+  
+  index += 1
+  percentage = int((index / 10) * 100)
+  print(f"{index} of out {10} - {percentage}%", end="\r")
+  
+  time.sleep(1)
+################################
+#print(f"Request complete. Saving file...")
