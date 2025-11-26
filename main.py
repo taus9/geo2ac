@@ -6,6 +6,8 @@ import sys
 import csv
 
 api_gateway = "https://api.timezonedb.com"
+end_point = "/v2.1/get-time-zone"
+
 filename = "us-area-code-geo.csv"
 rows = []
 
