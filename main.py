@@ -38,29 +38,28 @@ print("Total number of area codes: %d" % csvreader.line_num)
 
 if start_request() == False:
   sys.exit(0)
+  
+newRows = []
+index = 0
+while index < len(rows):
 
-##################
+  params = {
+    "key": api_key,
+    "format": "json",
+    "fields": "abbreviation",
+    "by": "position",
+    "lat": rows[index][1],
+    "lng": rows[index][2]
+  }
+  
+  response = requests.get(api_gateway + end_point, params=params)  
+ 
+  if response.status_code == 200:
+    print(response.json().get("abbreviation"))
+    index += 1
+  elif response.status_code == 429:
+    print("Rate limit retry.")  
+  else:
+    print("Error skipping code")
+    index += 1
 
-params = {
-  "key": api_key,
-  "format": "json",
-  "fields": "abbreviation",
-  "by": "position",
-  "lat": rows[0][1],
-  "lng": rows[0][2]
-}
-
-
-
-response = requests.get(api_gateway + end_point, params=params)
-
-print(f"Request sent: {response.url}")
-
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    # Print the response content
-    print("Response Content:")
-    print(response.json())  # Assuming the response is in JSON format
-else:
-    print(f"Request failed with status code: {response.status_code}")
-    print(f"Error message: {response.text}")
