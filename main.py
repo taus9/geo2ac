@@ -19,6 +19,7 @@ api_gateway = "https://api.timezonedb.com"
 end_point = "/v2.1/get-time-zone"
 
 filename = "us-area-code-geo.csv"
+output = "area-code-time-zone.csv"
 rows = []
 
 load_dotenv()
@@ -65,6 +66,13 @@ while index < 10:
   percentage = int((index / 10) * 100)
   print(f"{index} of out {10} - {percentage}%", end="\r")
   
-  time.sleep(1)
-################################
-#print(f"Request complete. Saving file...")
+  time.sleep(1) #Rate limit for free accounts is 1 second.
+
+
+print(f"Requests complete. Saving file...")
+with open(output, 'w') as csvfile:
+  csvwriter = csv.writer(csvfile)
+  csvwriter.writerows(newRows)
+  
+  
+  
