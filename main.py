@@ -43,7 +43,7 @@ if start_request() == False:
   
 newRows = []
 index = 0
-while index < 10:
+while index < len(rows):
 
   params = {
     "key": api_key,
@@ -63,8 +63,8 @@ while index < 10:
     continue
   
   index += 1
-  percentage = int((index / 10) * 100)
-  print(f"{index} of out {10} - {percentage}%", end="\r")
+  percentage = int((index / len(rows) * 100))
+  print(f"{index} of out {len(rows)} - {percentage}%", end="\r")
   
   time.sleep(1) #Rate limit for free accounts is 1 second.
 
