@@ -5,6 +5,10 @@ import os
 import sys
 import csv
 
+api_gateway = "https://api.timezonedb.com"
+filename = "us-area-code-geo.csv"
+rows = []
+
 load_dotenv()
 
 api_key = os.getenv("API_KEY")
@@ -12,8 +16,6 @@ if api_key is None:
   print("No API key found")
   sys.exit(1)
 
-filename = "us-area-code-geo.csv"
-rows = []
 
 with open(filename, 'r') as csvfile:
   csvreader = csv.reader(csvfile)
@@ -22,3 +24,5 @@ with open(filename, 'r') as csvfile:
 
 print(filename + " successfully loaded")
 print("Total number of area codes: %d" % csvreader.line_num)
+
+
